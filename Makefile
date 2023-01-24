@@ -10,7 +10,6 @@ CFLAGS = -Wall -std=c++11 # Flags
 # Clean old build files before compiling. Then use
 # all the available cores to compile
 all: clean main
-	make -j $(shell nproc) main
 
 main: main.o nodeImpl.o
 	$(CC) $(CFLAGS) -o main main.o nodeImpl.o
