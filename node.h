@@ -1,4 +1,3 @@
-//#include "nodeComparator.h" 
 /** The Node class is used for representing the different Nodes or states of a
  * board in a seach tree. The node must have a self heuristic, a data matrix with
  * the state of the board in that node and its depth inside the seach tree.
@@ -6,8 +5,6 @@
  * @version 23.01.2023
  * @see nodeImpl.cpp to see how this class functions are implemented. */
 class Node {
-  // Just a reminder for the Node class that NodeComparator exists. 
-  friend struct NodeComparator;    
 
   public:
     static int EXPLORED_NODES; // Count of all the explored nodes
@@ -62,7 +59,7 @@ class Node {
 };
 
 struct NodeComparator {
-    bool operator()(const Node* a, const Node* b) {
-      return a->eval > b->eval;
-    }
+  bool operator()(const Node* a, const Node* b) {
+    return a->eval > b->eval;
+  }
 };
