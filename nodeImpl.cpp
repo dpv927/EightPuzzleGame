@@ -1,13 +1,13 @@
 #include <iostream>
 #include <cmath>
-#include <string>
-#include <cstdint>
 #include <queue>
+#include <stack>
 #include <vector>
+#include <string>
 #include "coordinate.h"
 #include "node.h"
 
-int Node::EXPLORED_NODES = 0;
+int Node::CREATED_NODES = 0;
 int Node::EXPANDED_NODES = 0;
 Node* Node::ROOT_NODE = nullptr;
 Node* Node::FINAL_NODE = nullptr;
@@ -16,25 +16,30 @@ Coordinate Node::FINAL_POS[9];
 /* @brief Initializes the array with all the final coordinates of the
  * board chips, so we can check if any chip is out of position 
  * @param conf Final config of the board */
-void initFinalPositions(std::string conf) {
+void Node::initFinalPositions(std::string conf) {
   for (int i = 0; i < 9; i++) {
-    Node::FINAL_POS[(int)(conf[i])] = Coordinate(i/3,i%3);
+    Node::FINAL_POS[(int)(conf[i])-48] = Coordinate(i/3,i%3);
   }
 }
 
 /* @brief Initilalizes the root Node and the target node of a search.
  * @param init Initial board config (Needed for the root Node)
  * @param final Final board config (Needed for the target Node)*/
-void initNodes(std::string init, std::string final) {
+void Node::initNodes(std::string init, std::string final) {
   int row, col;
-  uint8_t** initData = new uint8_t*[3];
-  uint8_t** finData = new uint8_t*[3];
+  int** initData = new int*[3];
+  int** finData = new int*[3];
+
+  for (int i = 0; i < 3; i++) {
+    initData[i] = new int[3];
+    finData[i] = new int[3];
+  }
 
   for (int i = 0; i < 9; i++) {
     row = i/3;
     col = i%3;
-    initData[row][col] = (uint8_t) init[i];
-    finData[row][col] = (uint8_t) final[i];
+    initData[row][col] = ((int) init[i])-48;
+    finData[row][col] = ((int) final[i])-48;
   }
   Node::ROOT_NODE = new Node(initData);
   Node::FINAL_NODE = new Node(finData);
@@ -46,13 +51,14 @@ void initNodes(std::string init, std::string final) {
  * next the one at the left and lastly the one at the right. */
 std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSucessors() {
   std::priority_queue<Node*, std::vector<Node*>, NodeComparator> queue;
-  int holeRow = 0, holeCol = 0;
+  int holeRow = -1, holeCol = -1;
+  Node::EXPANDED_NODES++;
   
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
       if(this->data[i][j] == 0) {
         holeRow = i;
-        holeCol = i;
+        holeCol = j;
         break;
       }        
     }
@@ -60,8 +66,8 @@ std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSuc
 
   if(holeRow > 0) { // move up to down
 	  Node* node = new Node(this, this->dataCopy());
-		node->data[holeRow][holeCol] = node->data[holeRow-1][holeCol];
-		node->data[holeRow-1][holeCol] = 0;
+    node->data[holeRow][holeCol] = node->data[holeRow-1][holeCol];
+    node->data[holeRow-1][holeCol] = 0;
 		queue.push(node);
   }
 
@@ -81,7 +87,7 @@ std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSuc
 	
 	if(holeCol < 2) { // move right to left
 		Node* node = new Node(this, this->dataCopy());
-		node->data[holeRow][holeCol] = node->data[holeRow][holeCol+1];
+    node->data[holeRow][holeCol] = node->data[holeRow][holeCol+1];
 		node->data[holeRow][holeCol+1] = 0;
 		queue.push(node);
 	}
@@ -93,7 +99,7 @@ std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSuc
 int Node::calculateHeuristic() {
   int total = 0;
   for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       Coordinate* target = &Node::FINAL_POS[this->data[i][j]];
       
       if(i != target->i || j != target->j) {
@@ -107,11 +113,15 @@ int Node::calculateHeuristic() {
 /* @brief Utility to copy a Node's data (board)
  * @param data Data to copy 
  * @return Copied data */
-uint8_t** Node::dataCopy() {
-  uint8_t** dataCopy = new uint8_t*[3];
+int** Node::dataCopy() {
+  int** dataCopy = new int*[3];
 
   for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; i++) {
+    dataCopy[i] = new int[3];
+  }
+
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       dataCopy[i][j] = this->data[i][j];
     }
   }
@@ -121,7 +131,7 @@ uint8_t** Node::dataCopy() {
 /* @brief Checks if a Node is equal to another. */
 bool Node::equals(Node* other) {
   for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       if(this->data[i][j] != other->data[i][j]) {
         return false;
       }
@@ -132,14 +142,25 @@ bool Node::equals(Node* other) {
 
 /* @brief Prints a Node's data (board). */
 void Node::toString() {
-  if(data==nullptr)
-    std::cout << "Empty matrix" << std::endl;
-  else{
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        std::cout << unsigned(this->data[i][j]) << " ";
-      }
-      std::cout << std::endl;
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      std::cout << this->data[i][j] << " ";
     }
+    std::cout << std::endl;
   }
+}
+
+void fillQueue(Node* current, std::stack<Node*> &s) {
+    if (current->father == nullptr) {
+        return;
+    }
+    s.push(current->father);
+    fillQueue(current->father, s);
+}
+
+std::stack<Node*> Node::getAncestorsQueue(Node* node) {
+    std::stack<Node*> s;
+    s.push(node);
+    fillQueue(node, s);
+    return s;
 }
