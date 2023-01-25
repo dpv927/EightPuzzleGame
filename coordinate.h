@@ -1,3 +1,4 @@
+#include <cstdint>
 /** The Coordinate class represents a Coordinate inside a board of the
  * 8-puzzle game. The domain of the coordinates (i,j) inside the board are
  * i = {0,1,2} and j = {0,1,2}. Because of that, we use an unsigned int
