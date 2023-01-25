@@ -36,5 +36,5 @@ To unistall the program, just remove the executable at /usr/bin
 sudo rm /usr/bin/eightgame
 
 # MacOS
-/usr/local/bin/eightgame
+sudo rm /usr/local/bin/eightgame
 ```
