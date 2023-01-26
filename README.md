@@ -9,12 +9,13 @@ respresent the following board:
 ```
 +---+---+---+
 | 1 | 2 | 3 |
-+---+---+---+
-| 4 | 5 | 6 |
++---+---+---+   Note: A spot with '0' indicates that there is 
+| 4 | 5 | 6 |   no chip in that position on the board.
 +---+---+---+
 | 7 | 8 | 0 |
 +---+---+---+
 ```
+
 Then the solver will show the initial and final states of the board that where specified, the exact path from the given start to the solution with each step depth and
 some search info like `CREATED_NODES`, `EXPANDED_NODES` and `SOLUTION_DEPTH`.
 
