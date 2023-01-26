@@ -3,7 +3,7 @@
 # Eight-puzzle-game
 
 :uk: <a href="https://github.com/dpv927/eight-puzzle-game">English</a>
-:es: <a href="">Español</a>
+:es: <a href="#">Español</a>
 </div>
 
 ## Sobre esto
