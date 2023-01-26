@@ -1,4 +1,11 @@
-# eight-puzzle-game
+<div class="languages" align="center">
+
+# Eight-puzzle-game
+
+:uk: <a href="#">English</a>
+:es: <a href="https://github.com/dpv927/eight-puzzle-game/edit/main/esREADME.md">Español</a>
+</div>
+
 ## About
 Unlike other apps that solve the 8-puzzle, this app allows you to specify the final state of the board and the goal state. 
 The search tree is developed with the <ins>A* algorithm</ins>, giving the least expensive solution (talking about the number of moves).
@@ -30,8 +37,8 @@ If you want to install it directly:
 make clean install
 ```
 
-## Unistall
-To unistall the program, just remove the executable at /usr/bin
+## Uninstall
+To unistall the program, just remove the executable at the source path:
 ```bash
 # Linux
 sudo rm /usr/bin/eightgame
