@@ -2,7 +2,7 @@
  * board in a seach tree. The node must have a self heuristic, a data matrix with
  * the state of the board in that node and its depth inside the seach tree.
  * @author Filipondios
- * @version 23.01.2023
+ * @version 27.01.2023
  * @see nodeImpl.cpp to see how this class functions are implemented. */
 class Node {
 
@@ -62,12 +62,15 @@ class Node {
     int** dataCopy();
 };
 
+/* Comparates two nodes. Used in priority queues. */
 struct NodeComparator {
   bool operator()(const Node* a, const Node* b) {
     return a->eval > b->eval;
   }
 };
 
+/* A struct made for lists that not permit duplicated elements.
+ * Used in lists of visited Nodes. */
 struct NodeEquals {
   bool operator()(Node* a, Node* b) const {
     for (int i = 0; i < 3; i++) {
@@ -81,18 +84,18 @@ struct NodeEquals {
   }
 };
 
-namespace std {
-  template<> struct hash<Node*> {
+/* Hash function for the visited Nodes lists. Used in the
+ * visited Node lists (unordered_set) */
+template<> struct std::hash<Node*> {
     size_t operator()(const Node* n) const {
-      std::hash<int> h;
-      size_t seed = 0;
+    std::hash<int> h;
+    size_t seed = 0;
       
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          seed ^= h(n->data[i][j]) + 0x9e3779b9 + (seed);
-        }
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        seed ^= h(n->data[i][j]) + 0x9e3779b9 + (seed);
       }
-      return seed;
     }
-  };
-}
+    return seed;
+  }
+};
