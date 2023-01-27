@@ -15,7 +15,7 @@ int main() {
   Node* solution;
   Node* tmp;
 
-  std::cout << "Eight Puzzle Game Solver 1.0.0 - by Filipondios\n" <<
+  std::cout << "Eight Puzzle Game Solver 1.1.0 - by Filipondios\n" <<
   "Introduce a String that represents the board, describing the board and the position " <<
   "of each chip from up to down and from left to right.\n>> ";  
   std::cin >> initial;
@@ -38,6 +38,7 @@ int main() {
     exit(0);
   }
   
+  // Search Info: Results
   std::cout << "\nInitial board state: " << std::endl;
   Node::ROOT_NODE->toString();
   std::cout << "\nFinal board state:" << std::endl;
@@ -47,6 +48,7 @@ int main() {
   solutionPath = Node::getAncestorsQueue(solution);
   std::cout << "Solution path: \n" << std::endl;
 
+  // Print the solution path
   while(!solutionPath.empty()) {
     tmp = solutionPath.top();
     tmp->toString();
