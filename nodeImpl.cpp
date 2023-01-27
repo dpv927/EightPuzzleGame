@@ -7,11 +7,11 @@
 #include "coordinate.h"
 #include "node.h"
 
-int Node::CREATED_NODES = 0;
-int Node::EXPANDED_NODES = 0;
-Node* Node::ROOT_NODE = nullptr;
-Node* Node::FINAL_NODE = nullptr;
-Coordinate Node::FINAL_POS[9]; 
+int Node::CREATED_NODES = 0; // Initialize created nodes
+int Node::EXPANDED_NODES = 0; // Initialize expanded nodes
+Node* Node::ROOT_NODE = nullptr; // Initialize root nodes
+Node* Node::FINAL_NODE = nullptr; // Initialize the final node
+Coordinate Node::FINAL_POS[9];  // Final positions of the chips
 
 /* @brief Initializes the array with all the final coordinates of the
  * board chips, so we can check if any chip is out of position 
@@ -45,10 +45,10 @@ void Node::initNodes(std::string init, std::string final) {
   Node::FINAL_NODE = new Node(finData);
 }
 
-/** @brief Generates all the sucessors of a node (by its legal moves) and
- * stores them in a priority queue. The orther is the next one: First we
- * try to move the chip that is above the gap, then the one under the gap,
- * next the one at the left and lastly the one at the right. */
+/** @brief Generates all the sucessors of a node (by its legal moves).
+ * Stores all the sucessors in a priority queue. The orther is the next one: 
+ * First we try to move the chip that is above the gap, then the one under
+ * the gap, next the one at the left and lastly the one at the right. */
 std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSucessors() {
   std::priority_queue<Node*, std::vector<Node*>, NodeComparator> queue;
   int holeRow = -1, holeCol = -1;
@@ -128,7 +128,8 @@ int** Node::dataCopy() {
   return dataCopy;
 }
 
-/* @brief Checks if a Node is equal to another. */
+/* @brief Checks if a Node is equal to another.
+ * @return true if both nodes are equal, else false. */
 bool Node::equals(Node* other) {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
@@ -142,14 +143,17 @@ bool Node::equals(Node* other) {
 
 /* @brief Prints a Node's data (board). */
 void Node::toString() {
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      std::cout << this->data[i][j] << " ";
-    }
-    std::cout << std::endl;
-  }
+  std::cout << "+---+---+---+\n" 
+            << "| " << this->data[0][0] << " | " << this->data[0][1] << " | " << this->data[0][2] << " |\n" 
+            << "+---+---+---+\n"
+            << "| " << this->data[1][0] << " | " << this->data[1][1] << " | " << this->data[1][2] << " |\n"
+            << "+---+---+---+\n"
+            << "| " << this->data[2][0] << " | " << this->data[2][1] << " | " << this->data[2][2] << " |\n"
+            << "+---+---+---+" << std::endl;
 }
 
+/* @brief Puts the ancestor of a Node recursively. In
+ * a stack. */
 void fillQueue(Node* current, std::stack<Node*> &s) {
     if (current->father == nullptr) {
         return;
@@ -158,6 +162,10 @@ void fillQueue(Node* current, std::stack<Node*> &s) {
     fillQueue(current->father, s);
 }
 
+/* @brief Gets all the ancestors of a node. 
+ * All the sucessors (pointers to them) are stored in a stack,
+ * so when a queue is processed, the ancestors order is well done.
+ * @return stack with all the ancestors. */
 std::stack<Node*> Node::getAncestorsQueue(Node* node) {
     std::stack<Node*> s;
     s.push(node);
