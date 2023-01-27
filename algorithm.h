@@ -1,12 +1,17 @@
+/*@brief A* algorithm implemented for the 8-puzzle game.
+ * Uses a list with unique Nodes (can't be repeated) that have been visited
+ * to avoid repeating moves. Sometimes this is more efficient than others because
+ * in some ocasions a move can be repeated. Anyways this is a very uncommon thing.*/
 Node* AStar() {
   std::priority_queue<Node*, std::vector<Node*>, NodeComparator> queue;
-  std::priority_queue<Node*, std::vector<Node*>, NodeComparator> tmp;
+  std::priority_queue<Node*, std::vector<Node*>, NodeComparator> sucessors;
   std::unordered_set<Node*, std::hash<Node*>, NodeEquals> visited;
   Node* queue_element;
+  Node* current;
   queue.push(Node::ROOT_NODE);
   
   while(!queue.empty()) {
-    Node* current = queue.top();
+    current = queue.top();
 
     if(current->equals(Node::FINAL_NODE)) {
       return current;
@@ -14,11 +19,11 @@ Node* AStar() {
 
     queue.pop();
     visited.insert(current);
-    tmp = current->generateSucessors();
+    sucessors = current->generateSucessors();
 
-    while(!tmp.empty()) {
-      queue_element = tmp.top();
-      tmp.pop();
+    while(!sucessors.empty()) {
+      queue_element = sucessors.top();
+      sucessors.pop();
 
       if (visited.find(queue_element) == visited.end()) {
         queue.push(queue_element);
