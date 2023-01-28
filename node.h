@@ -1,21 +1,19 @@
 /** The Node class is used for representing the different Nodes or states of a
- * board in a seach tree. The node must have a self heuristic, a data matrix with
+ * board in a seach tree. A node must have a self heuristic, a data matrix with
  * the state of the board in that node and its depth inside the seach tree.
  * @author Filipondios
- * @version 27.01.2023
- * @see nodeImpl.cpp to see how this class functions are implemented. */
+ * @version 28.01.2023
+ * @see node.cpp to see how this class functions are implemented. */
 class Node {
 
-  public:
+  private:
     static int CREATED_NODES; // Count of all the explored nodes
-    static int EXPANDED_NODES; // Count of all the expanded nodes
-    static Node* ROOT_NODE; // Root Node of a search tree (Initial state)
-    static Node* FINAL_NODE; // Final Node of a search tree (target state)
+    static int EXPANDED_NODES; // Count of all the expanded nodes 
     static Coordinate FINAL_POS[9]; // Final positions of the chips
-    static struct NodeComparator comparator; // Comparator for two nodes 
-  
+
+  public:
     Node* father; // Father node
-    int** data; // Game board
+    uint8_t** data; // Game board
     int nodeDepth; // Depth of this node
     int eval; // Node evaluation value
   
@@ -23,31 +21,37 @@ class Node {
     * Creates a intermidiate Node of a search tree.
     * @param data Board state of the created Node
     * @param father Father node of this Node in the seach tree */
-    Node(Node* father, int** data) {
+    Node(Node* father, uint8_t** data) {
+      std::cout << "Info: Creating node at depth " << this->nodeDepth << std::endl;  
       this->data = data;
       this->father = father;
       this->nodeDepth = father->nodeDepth + 1;
       this->eval = calculateHeuristic() + this->nodeDepth;
-      std::cout << "Info: Creating node at depth " << this->nodeDepth << std::endl;
       Node::CREATED_NODES++;
     }
 
    /* @brief Root Node constructor.
     * Creates the root Node of a search tree.
-    * @param data Board state of the created Node
-    * @param father Father node of this Node in the seach tree */
-    Node(int** data) {
-      this->data = data;
+    * @param config Board state of the created Node */
+    Node(std::string config) {
+
+      this->data = new uint8_t*[3];
+
+      for (int i = 0; i < 3; i++) {
+        this->data[i] = new uint8_t[3];
+      }
+      for (int i = 0; i < 9; i++) {
+        this->data[i/3][i%3] = ((uint8_t) config[i])-48;
+      }
       this->father = nullptr;
       this->nodeDepth = 0;
       this->eval = 0;
     }
+
   /* @brief Initilializes the final postions array. */
     static void initFinalPositions(std::string);
-  /* @brief Initializes the root and final node of a seach */
-    static void initNodes(std::string, std::string);
   /* @brief Generates the sucessors of a node. */
-    std::priority_queue<Node*, std::vector<Node*>, NodeComparator> generateSucessors();
+    std::priority_queue<Node*, std::vector<Node*>, struct NodeComparator> generateSucessors();
   /* @brief Gets a stack with all the antecesor Nodes of a Node */
     static std::stack<Node*> getAncestorsQueue(Node*);
   /* @brief Prints the Node. */
@@ -59,7 +63,7 @@ class Node {
     /*@brief Calculates the heuristic of a node*/
     int calculateHeuristic();
     /*@brief Copies the board state of a Node.*/
-    int** dataCopy();
+    uint8_t** dataCopy();
 };
 
 /* Comparates two nodes. Used in priority queues. */
@@ -73,29 +77,23 @@ struct NodeComparator {
  * Used in lists of visited Nodes. */
 struct NodeEquals {
   bool operator()(Node* a, Node* b) const {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (a->data[i][j] != b->data[i][j]) {
-          return false;
-        }
-      }
-    }
-    return true;
+    return a->equals(b);
   }
 };
 
 /* Hash function for the visited Nodes lists. Used in the
  * visited Node lists (unordered_set) */
+const std::uint32_t fnv1a_offset_basis = 2166136261;
+const std::uint32_t fnv1a_prime = 16777619;
+
 template<> struct std::hash<Node*> {
-    size_t operator()(const Node* n) const {
-    std::hash<int> h;
-    size_t seed = 0;
-      
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        seed ^= h(n->data[i][j]) + 0x9e3779b9 + (seed);
+  std::size_t operator()(const Node* n) const {
+    std::uint32_t hash = fnv1a_offset_basis;
+      for (int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+          hash = (hash ^ n->data[i][j]) * fnv1a_prime;
+        }
       }
+      return hash;
     }
-    return seed;
-  }
 };
