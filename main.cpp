@@ -18,7 +18,7 @@ int main() {
   Node* solution;
   Node* tmp;
 
-  std::cout << "Eight Puzzle Game Solver 1.1.0 - by Filipondios\n" <<
+  std::cout << "Eight Puzzle Game Solver 1.2.0 - by Filipondios\n" <<
   "Introduce a String that represents the board, describing the board and the position " <<
   "of each chip from up to down and from left to right.\n>> ";  
   std::cin >> initial_config;
@@ -60,7 +60,7 @@ int main() {
     solutionPath.pop();
   }  
   
-  //std::cout << "Solution found at depth: " << solution->nodeDepth << "\nCreated Nodes: " 
-  //          << Node::CREATED_NODES << "\nExpanded nodes: " << Node::EXPANDED_NODES << "\n";
+  std::cout << "Solution found at depth: " << solution->nodeDepth << "\nCreated Nodes: " 
+            << Node::CREATED_NODES << "\nExpanded nodes: " << Node::EXPANDED_NODES << "\n";
   return 0;
 }
