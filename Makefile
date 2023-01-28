@@ -7,7 +7,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=nodeImpl.cpp main.cpp
+SOURCES=node.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 HEADERS=node.h coordinate.h algorithm.h
 EXECUTABLE=eightgame
