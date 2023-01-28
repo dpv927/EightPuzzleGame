@@ -7,11 +7,11 @@
 class Node {
 
   private:
-    static int CREATED_NODES; // Count of all the explored nodes
-    static int EXPANDED_NODES; // Count of all the expanded nodes 
     static Coordinate FINAL_POS[9]; // Final positions of the chips
 
   public:
+    static int CREATED_NODES; // Count of all the explored nodes
+    static int EXPANDED_NODES; // Count of all the expanded nodes 
     Node* father; // Father node
     uint8_t** data; // Game board
     int nodeDepth; // Depth of this node
