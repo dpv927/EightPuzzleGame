@@ -2,7 +2,7 @@
  * board in a seach tree. A node must have a self heuristic, a data matrix with
  * the state of the board in that node and its depth inside the seach tree.
  * @author Filipondios
- * @version 28.01.2023
+ * @version 31.01.2023
  * @see node.cpp to see how this class functions are implemented. */
 class Node {
 
@@ -10,19 +10,18 @@ class Node {
     static Coordinate FINAL_POS[9]; // Final positions of the chips
 
   public:
-    static int CREATED_NODES; // Count of all the explored nodes
-    static int EXPANDED_NODES; // Count of all the expanded nodes 
+    static unsigned int CREATED_NODES; // Count of all the explored nodes
+    static unsigned int EXPANDED_NODES; // Count of all the expanded nodes 
     Node* father; // Father node
     uint8_t** data; // Game board
-    int nodeDepth; // Depth of this node
-    int eval; // Node evaluation value
+    unsigned short nodeDepth; // Depth of this node
+    short eval; // Node evaluation value
   
    /* @brief Normal Node constructor.
     * Creates a intermidiate Node of a search tree.
     * @param data Board state of the created Node
     * @param father Father node of this Node in the seach tree */
     Node(Node* father, uint8_t** data) {
-      std::cout << "Info: Creating node at depth " << this->nodeDepth << std::endl;  
       this->data = data;
       this->father = father;
       this->nodeDepth = father->nodeDepth + 1;
@@ -37,10 +36,10 @@ class Node {
 
       this->data = new uint8_t*[3];
 
-      for (int i = 0; i < 3; i++) {
+      for (uint8_t i = 0; i < 3; i++) {
         this->data[i] = new uint8_t[3];
       }
-      for (int i = 0; i < 9; i++) {
+      for (uint8_t i = 0; i < 9; i++) {
         this->data[i/3][i%3] = ((uint8_t) config[i])-48;
       }
       this->father = nullptr;
@@ -79,21 +78,4 @@ struct NodeEquals {
   bool operator()(Node* a, Node* b) const {
     return a->equals(b);
   }
-};
-
-/* Hash function for the visited Nodes lists. Used in the
- * visited Node lists (unordered_set) */
-const std::uint32_t fnv1a_offset_basis = 2166136261;
-const std::uint32_t fnv1a_prime = 16777619;
-
-template<> struct std::hash<Node*> {
-  std::size_t operator()(const Node* n) const {
-    std::uint32_t hash = fnv1a_offset_basis;
-      for (int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
-          hash = (hash ^ n->data[i][j]) * fnv1a_prime;
-        }
-      }
-      return hash;
-    }
 };

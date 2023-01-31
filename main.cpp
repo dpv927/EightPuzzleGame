@@ -3,8 +3,6 @@
 #include <stack>
 #include <vector>
 #include <string>
-#include <unordered_set>
-#include <functional>
 #include <cstdint>
 #include "coordinate.h"
 #include "node.h"
@@ -35,6 +33,8 @@ int main() {
   final = new Node(final_config); 
 
   Node::initFinalPositions(final_config);
+
+  std::cout << "Please wait..." << std::endl;
   solution = AStar(initial, final);
     
   if(solution==nullptr) {
