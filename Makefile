@@ -42,7 +42,7 @@ install:
 	@if [ "$(shell uname -s)" = "Linux" ]; then \
 		echo "Running make in Linux. Copiying 'eightgame' to /usr/bin/"; \
 		sudo cp $(EXECUTABLE) /usr/bin/; \
-		sudo cp -r 8-puzzle-solver.6.gz /usr/share/man/man6; \
+		sudo cp -r 8-puzzle-solver.6 /usr/share/man/man6; \
 	elif [ "$(shell uname -s)" = "Darwin" ]; then \
 		echo "Running make in MacOS. Copiying 'eightgame' to /usr/local/bin/"; \
 		sudo cp $(EXECUTABLE) /usr/local/bin/; \
