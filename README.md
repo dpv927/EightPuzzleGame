@@ -11,7 +11,7 @@ Unlike other apps that solve the 8-puzzle, this app allows you to specify the fi
 The search tree is developed with the <ins>A* algorithm</ins>, giving the least expensive solution (talking about the number of moves).
 
 ## How to use
-The solver expects two inputs (initial and final states of the board) as a string. For example, the string "123456780" (Obviously without the quotes ("")) will
+The solver expects two inputs (initial and final states of the board) as a string. For example, the string "123456780" (Obviously without the quotes "") will
 respresent the following board: 
 ```
 +---+---+---+
