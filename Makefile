@@ -25,18 +25,10 @@ $(HEADERS): $(SOURCES)
 clean:
 	rm -rf $(EXECUTABLE) $(OBJECTS)
 	$(MAKE) all
-
-# Before running 'make', you can run 'make clean', so you delete the old
-# project files like .o files and the project executable. 
-#
-# This last action will clean the current project directory so you only 
-# have the source files like .cpp and .h.
-
-cleanAll:
 	rm -rf $(OBJECTS)
 
-# To clean the current dir from the .o files, just run make clean-dir,
-# so you'll only have the executable (project sample) in the project dir.
+# Instead of running 'make', you can run 'make clean', so you delete the old
+# project files like .o files and the project executable and generate the new executable. 
 
 install:
 	@if [ "$(shell uname -s)" = "Linux" ]; then \
