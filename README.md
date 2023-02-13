@@ -7,12 +7,11 @@
 </div>
 
 ## About
-Unlike other apps that solve the 8-puzzle, this app allows you to specify the final state of the board and the goal state. 
+Unlike other apps that solve the 8-puzzle, this app allows you to specify the initial and goal state of the game-board. 
 The search tree is developed with the <ins>A* algorithm</ins>, giving the least expensive solution (talking about the number of moves).
 
 ## How to use
-The solver expects two inputs (initial and final states of the board) as a string. For example, the string "123456780" (Obviously without the quotes "") will
-represent the following board: 
+The program expects two arguments (initial and final states of the board described as strings). For example, the string "123456780" (Obviously without the quotes "") will represent the following board: 
 ```
 +---+---+---+
 | 1 | 2 | 3 |
@@ -22,9 +21,9 @@ represent the following board:
 | 7 | 8 | 0 |
 +---+---+---+
 ```
+For example, an example of execution of the program can be: ``8-puzzle-solver 123456780 012345678``, were 123456780 is the initial state of the board, and 012345678 the final state of the board.
 
-Then the solver will show the initial and final states of the board that were specified, the exact path from the given start to the solution with each step depth and
-some search info like `CREATED_NODES`, `EXPANDED_NODES` and `SOLUTION_DEPTH`.
+Then the solver will show the initial and final states of the board that were specified, the exact path from the given start to the solution with each step depth and some search info like `CREATED_NODES`, `EXPANDED_NODES` and `SOLUTION_DEPTH`.
 
 ## Compile & Install
 The project has an easy way to compile all the source code to an executable file and install it. To compile run:
