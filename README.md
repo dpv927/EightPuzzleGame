@@ -12,7 +12,7 @@ The search tree is developed with the <ins>A* algorithm</ins>, giving the least 
 
 ## How to use
 The solver expects two inputs (initial and final states of the board) as a string. For example, the string "123456780" (Obviously without the quotes "") will
-respresent the following board: 
+represent the following board: 
 ```
 +---+---+---+
 | 1 | 2 | 3 |
@@ -23,11 +23,11 @@ respresent the following board:
 +---+---+---+
 ```
 
-Then the solver will show the initial and final states of the board that where specified, the exact path from the given start to the solution with each step depth and
+Then the solver will show the initial and final states of the board that were specified, the exact path from the given start to the solution with each step depth and
 some search info like `CREATED_NODES`, `EXPANDED_NODES` and `SOLUTION_DEPTH`.
 
 ## Compile & Install
-The project has a easy way to compile all the source code to a executable file and install it. To compile run:
+The project has an easy way to compile all the source code to an executable file and install it. To compile run:
 ```bash
 make clean
 ```
@@ -48,5 +48,5 @@ sudo rm /usr/local/bin/eightgame
 ```
 
 > **Note**
-> The 'make install' command is made only for Linux and MacOS. If you use Windows, modify the Makefile or copy the compiled execulable file into a source path
+> The 'make install' command is made only for Linux and MacOS. If you use Windows, modify the Makefile or copy the compiled executable file into a source path
 like C:\\\Program Files.
