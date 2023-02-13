@@ -11,8 +11,8 @@ A diferencia de otras aplicaciones que resuelven el juego del 8, a esta aplicaci
 El arbol de búsqueda es desarrollado por el <ins>algoritmo A*</ins>, dando la solución menos costosa (hablando del número de movimientos realizados).
 
 ## Como usar
-La aplicación espera dos entradas (el estado inicial y final del tablero) como un string (cadena de texto). Por ejemplo, para el string "123456780"
-(Evidentemente sin las comillas ("")) representará el siguiente tablero: 
+La aplicación espera dos argumentos (el estado inicial y final del tablero) como strings (cadena de texto). Por ejemplo, para el string "123456780"
+(Evidentemente sin las comillas "") representará el siguiente tablero: 
 ```
 +---+---+---+
 | 1 | 2 | 3 |
@@ -23,9 +23,9 @@ La aplicación espera dos entradas (el estado inicial y final del tablero) como 
 +---+---+---+
 ```
 
-Tras ejecutar la aplicación nos mostrará el estado inicial y final del tablero especificado, la secuencia exacta de movimientos que hay que realizar desde el estado
-inicial hasta el final con sus respectivas representaciones del tablero y su orden (depth) y alguna información sobre el proceso de búsqueda como lo es `CREATED_NODES`
-(nodos creados), `EXPANDED_NODES` (nodos desarrollados) y `SOLUTION_DEPTH` (a que profundidad se encontró la solución.
+Un ejemplo de ejecución podría ser: `8-puzzle-solver 123456780 012345678`, donde 123456780 es la configuración inicial y 012345678 la final u objetivo del tablero.
+
+Tras ejecutar la aplicación nos mostrará el estado inicial y final del tablero especificado, la secuencia exacta de movimientos que hay que realizar desde el estado inicial hasta el final con sus respectivas representaciones del tablero y su orden (depth) y alguna información sobre el proceso de búsqueda como lo es `CREATED_NODES` (nodos creados), `EXPANDED_NODES` (nodos desarrollados) y `SOLUTION_DEPTH` (a que profundidad se encontró la solución.
 
 ## Compilar e Instalar
 
