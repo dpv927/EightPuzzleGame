@@ -8,38 +8,42 @@
 #include "node.h"
 #include "algorithm.h"
 
-int main() {
-  std::string initial_config, final_config;
+int main(int argc, char *argv[]) {
+  
+  std::string initial_config;
+  std::string final_config;
   std::stack<Node*> solutionPath;
   Node* initial;
   Node* final;
   Node* solution;
   Node* tmp;
 
-  std::cout << "Eight Puzzle Game Solver 1.2.0 - by Filipondios\n" <<
-  "Introduce a String that represents the board, describing the board and the position " <<
-  "of each chip from up to down and from left to right.\n>> ";  
-  std::cin >> initial_config;
-
-  std::cout << "\nIntroduce the final (target) board config:\n>> ";
-  std::cin >> final_config;
-
-  if(initial_config.length()!=9 || final_config.length()!=9) {
-    std::cout << "Cannot parse the given strings to a board config :(" << std::endl;
-    exit(0);
+  if(argc != 3) {
+    std::cout << "Two args (initial & final states) are required to calculate the solution "
+              << "of a 8-Puzzle game. See the documentation for more info." << std::endl;
+    return -1;
   }
   
-  initial = new Node(initial_config);
-  final = new Node(final_config); 
+  initial_config = argv[1];
+  final_config = argv[2];
+  
+  if(initial_config.length()!=9 || final_config.length()!=9) {
+    std::cout << "Cannot parse the given args to a board config." << std::endl;
+    return -1;
+  }
 
+  // Create the initial and final nodes of the problem
+  initial = new Node(initial_config);
+  final = new Node(final_config);
   Node::initFinalPositions(final_config);
 
+  // Start the A* algorithm search
   std::cout << "Please wait..." << std::endl;
   solution = AStar(initial, final);
     
-  if(solution==nullptr) {
+  if(solution == nullptr) {
     std::cout << "\nNo solution found." << std::endl;
-    exit(0);
+    return 0;
   }
   
   // Search Info: Results

@@ -33,14 +33,21 @@ class Node {
     * Creates the root Node of a search tree.
     * @param config Board state of the created Node */
     Node(std::string config) {
-
+      int cmp;
       this->data = new uint8_t*[3];
 
       for (uint8_t i = 0; i < 3; i++) {
         this->data[i] = new uint8_t[3];
       }
       for (uint8_t i = 0; i < 9; i++) {
-        this->data[i/3][i%3] = ((uint8_t) config[i])-48;
+        cmp = ((uint8_t) config[i])-48;
+
+        if(cmp<1 || cmp>8) {
+          std::cout << "Error while creating the nodes: The specified " 
+                    "string is not valid." << std::endl;
+          exit(-1);
+        }
+        this->data[i/3][i%3] = cmp;
       }
       this->father = nullptr;
       this->nodeDepth = 0;

@@ -1,12 +1,16 @@
 .TH 8-PUZZLE-SOLVER 1 "February 10, 2023" "Version 1.2.0" "User Manual"
+
 .SH NAME
 8-puzzle-solver \- a puzzle solving app that allows you to specify the initial and goal state of the board of a 8 puzzle game.
+
 .SH SYNOPSIS
-8-puzzle-solver
+8-puzzle-solver [INITIAL_STATE] [FINAL_STATE]
+
 .SH DESCRIPTION
 Unlike other apps that solve the 8-puzzle, this app allows you to specify the final state of the board and the goal state. The search tree is developed with the A* algorithm, giving the least expensive solution (talking about the number of moves).
+
 .SH USAGE
-The solver expects two inputs (initial and final states of the board) as a string. For example, the string "123456780" (Obviously without the quotes "") will represent the following board:
+The applicattion expects two arguments (initial and final states of the board). For example, the string "123456780" (Obviously without the quotes "") will represent the following board:
 
 .PP
 .TS
@@ -17,13 +21,19 @@ c c c .
 7 8 0
 .TE
 
+An example of execution of the program, you can run '8-puzzle-solver 123456780 012345678', were 123456780 is the initial state of the board and 012345678 is the final state of the board.
+
 .PP
 Then the solver will show the initial and final states of the board that were specified, the exact path from the given start to the solution with each step depth and some search info like CREATED_NODES, EXPANDED_NODES and SOLUTION_DEPTH.
+
 .SH OPTIONS
 No options are currently supported.
+
 .SH SEE ALSO
 No related manuals are available.
+
 .SH BUGS
-The following is not a bug, but the user must be aware of the following information: When the app requests the initial and final states of the board, if the user decides to enter anything other than a complete number string, the app will crash and terminate. This 'failure' will remain in the app as it is assumed that the user knows what input is required.
+No bugs at the moment.
+
 .SH AUTHOR
 Filipondios
