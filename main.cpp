@@ -60,11 +60,8 @@ int main(int argc, char *argv[]) {
   while(!solutionPath.empty()) {
     tmp = solutionPath.top();
     tmp->toString();
-    std::cout << "Depth = " << tmp->nodeDepth << "\n" << std::endl;
+    std::cout << "Depth -> " << tmp->nodeDepth << "\n" << std::endl;
     solutionPath.pop();
-  }  
-  
-  std::cout << "Solution found at depth: " << solution->nodeDepth << "\nCreated Nodes: " 
-            << Node::CREATED_NODES << "\nExpanded nodes: " << Node::EXPANDED_NODES << "\n";
+  }   
   return 0;
 }

@@ -2,16 +2,12 @@
  * board in a seach tree. A node must have a self heuristic, a data matrix with
  * the state of the board in that node and its depth inside the seach tree.
  * @author Filipondios
- * @version 31.01.2023
+ * @version 20.03.2023
  * @see node.cpp to see how this class functions are implemented. */
 class Node {
 
-  private:
-    static Coordinate FINAL_POS[9]; // Final positions of the chips
-
   public:
-    static unsigned int CREATED_NODES; // Count of all the explored nodes
-    static unsigned int EXPANDED_NODES; // Count of all the expanded nodes 
+    static Coordinate FINAL_POS[9]; // Final positions of the chips
     Node* father; // Father node
     uint8_t** data; // Game board
     unsigned short nodeDepth; // Depth of this node
@@ -26,7 +22,6 @@ class Node {
       this->father = father;
       this->nodeDepth = father->nodeDepth + 1;
       this->eval = calculateHeuristic() + this->nodeDepth;
-      Node::CREATED_NODES++;
     }
 
    /* @brief Root Node constructor.
@@ -42,7 +37,7 @@ class Node {
       for (uint8_t i = 0; i < 9; i++) {
         cmp = ((uint8_t) config[i])-48;
 
-        if(cmp<1 || cmp>8) {
+        if(cmp<0 || cmp>8) {
           std::cout << "Error while creating the nodes: The specified " 
                     "string is not valid." << std::endl;
           exit(-1);

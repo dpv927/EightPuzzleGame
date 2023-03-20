@@ -8,8 +8,6 @@
 #include "coordinate.h"
 #include "node.h"
 
-unsigned int Node::CREATED_NODES = 0; // Initialize created nodes
-unsigned int Node::EXPANDED_NODES = 0; // Initialize expanded nodes
 Coordinate Node::FINAL_POS[9];  // Final positions of the chips
 
 /* @brief Initializes the array with all the final coordinates of the
@@ -28,7 +26,6 @@ void Node::initFinalPositions(std::string conf) {
 std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSucessors() {
   std::priority_queue<Node*, std::vector<Node*>, NodeComparator> queue;
   short holeRow = -1, holeCol = -1;
-  Node::EXPANDED_NODES++;
   
   for (uint8_t i = 0; i < 3; i++) {
     for (uint8_t j = 0; j < 3; j++) {
