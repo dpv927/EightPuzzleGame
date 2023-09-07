@@ -4,28 +4,22 @@
 # - version 25.01.2023
 # Please modify carefully this file.
 
-CC=g++
-CFLAGS=-c -Wall
-LDFLAGS=
-SOURCES=node.cpp main.cpp
+CC=clang++
+CFLAGS=-c -g -Wall -Wextra -Wunused
+SOURCES=node.cpp algorithm.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-HEADERS=node.h coordinate.h algorithm.h
-EXECUTABLE=8-puzzle-solver
+EXECUTABLE=8solver
 
-all: $(SOURCES) $(HEADERS) $(EXECUTABLE)
+all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
 
-.cpp.o: $(HEADERS)
+.cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
-$(HEADERS): $(SOURCES)
-
 clean:
-	rm -rf $(EXECUTABLE) $(OBJECTS)
-	$(MAKE) all
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS) $(EXECUTABLE)
 
 # Instead of running 'make', you can run 'make clean', so you delete the old
 # project files like .o files and the project executable and generate the new executable. 
@@ -46,3 +40,5 @@ install:
 # MacOS. To install the project, run 'make install' but if you haven't
 # compiled the project yet, just run 'make' and 'make install' or 'make clean'
 # and 'make install' or directly 'make clean install'.
+
+PHONY: clean install

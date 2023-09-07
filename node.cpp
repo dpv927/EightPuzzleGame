@@ -1,12 +1,5 @@
-#include <iostream>
-#include <cmath>
-#include <queue>
-#include <stack>
-#include <vector>
-#include <string>
-#include <cstdint>
-#include "coordinate.h"
-#include "node.h"
+#include "node.hpp"
+#include "types.hpp"
 
 Coordinate Node::FINAL_POS[9];  // Final positions of the chips
 
@@ -14,8 +7,8 @@ Coordinate Node::FINAL_POS[9];  // Final positions of the chips
  * board chips, so we can check if any chip is out of position 
  * @param conf Final config of the board */
 void Node::initFinalPositions(std::string conf) {
-  for (uint8_t i = 0; i < 9; i++) {
-    Node::FINAL_POS[(uint8_t)(conf[i])-48] = Coordinate(i/3,i%3);
+  for (u8 i = 0; i < 9; i++) {
+    Node::FINAL_POS[(u8)(conf[i])-48] = Coordinate(i/3,i%3);
   }
 }
 
@@ -27,8 +20,8 @@ std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSuc
   std::priority_queue<Node*, std::vector<Node*>, NodeComparator> queue;
   short holeRow = -1, holeCol = -1;
   
-  for (uint8_t i = 0; i < 3; i++) {
-    for (uint8_t j = 0; j < 3; j++) {
+  for (u8 i = 0; i < 3; i++) {
+    for (u8 j = 0; j < 3; j++) {
       if(this->data[i][j] == 0) {
         holeRow = i;
         holeCol = j;
@@ -71,8 +64,8 @@ std::priority_queue<Node*, std::vector<Node*>, NodeComparator> Node::generateSuc
  * @returns Value of the heuristic */
 int Node::calculateHeuristic() {
   short total = 0;
-  for (uint8_t i = 0; i < 3; i++) {
-    for (uint8_t j = 0; j < 3; j++) {
+  for (u8 i = 0; i < 3; i++) {
+    for (u8 j = 0; j < 3; j++) {
       Coordinate* target = &Node::FINAL_POS[this->data[i][j]];
       
       if(i != target->i || j != target->j) {
@@ -86,15 +79,15 @@ int Node::calculateHeuristic() {
 /* @brief Utility to copy a Node's data (board)
  * @param data Data to copy 
  * @return Copied data */
-uint8_t** Node::dataCopy() {
-  uint8_t** dataCopy = new uint8_t*[3];
+u8** Node::dataCopy() {
+  u8** dataCopy = new u8*[3];
 
-  for (uint8_t i = 0; i < 3; i++) {
-    dataCopy[i] = new uint8_t[3];
+  for (u8 i = 0; i < 3; i++) {
+    dataCopy[i] = new u8[3];
   }
 
-  for (uint8_t i = 0; i < 3; i++) {
-    for (uint8_t j = 0; j < 3; j++) {
+  for (u8 i = 0; i < 3; i++) {
+    for (u8 j = 0; j < 3; j++) {
       dataCopy[i][j] = this->data[i][j];
     }
   }
@@ -104,8 +97,8 @@ uint8_t** Node::dataCopy() {
 /* @brief Checks if a Node is equal to another.
  * @return true if both nodes are equal, else false. */
 bool Node::equals(Node* other) {
-  for (uint8_t i = 0; i < 3; i++) {
-    for (uint8_t j = 0; j < 3; j++) {
+  for (u8 i = 0; i < 3; i++) {
+    for (u8 j = 0; j < 3; j++) {
       if(this->data[i][j] != other->data[i][j]) {
         return false;
       }
@@ -116,13 +109,14 @@ bool Node::equals(Node* other) {
 
 /* @brief Prints a Node's data (board). */
 void Node::toString() {
-  std::cout << "+---+---+---+\n" 
-            << "| " << unsigned(this->data[0][0]) << " | " << unsigned(this->data[0][1]) << " | " << unsigned(this->data[0][2]) << " |\n" 
-            << "+---+---+---+\n"
-            << "| " << unsigned(this->data[1][0]) << " | " << unsigned(this->data[1][1]) << " | " << unsigned(this->data[1][2]) << " |\n"
-            << "+---+---+---+\n"
-            << "| " << unsigned(this->data[2][0]) << " | " << unsigned(this->data[2][1]) << " | " << unsigned(this->data[2][2]) << " |\n"
-            << "+---+---+---+" << std::endl;
+    std::cout << "+---+---+---+\n";
+
+    for (u8 i = 0; i < 3; ++i){
+      for (u8 j = 0; j < 3; ++j)
+        std::cout << "| " << unsigned(this->data[i][j]) << " ";
+      std::cout << "|\n+---+---+---+\n";
+    }
+    std::cout << std::endl;
 }
 
 /* @brief Puts the ancestor of a Node recursively. In

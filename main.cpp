@@ -1,12 +1,6 @@
 #include <iostream>
-#include <queue>
-#include <stack>
-#include <vector>
-#include <string>
-#include <cstdint>
-#include "coordinate.h"
-#include "node.h"
-#include "algorithm.h"
+#include "node.hpp"
+#include "algorithm.hpp"
 
 int main(int argc, char *argv[]) {
   
