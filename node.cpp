@@ -4,16 +4,24 @@
 
 using namespace std;
 namespace EightPuzzleGame_Utils {
+
+  bool Node::isBoardConfig(string config) {
+    string pattern = R"(^([0-8])(?:-(?!.*\1)([0-8])){8}$)";
+    return std::regex_match(config, regex(pattern));   
+  }
   
-  void Node::initFinalPositions(string& conf) {
-    for (int i = 0; i < 9; i++) {
-      Node::targetBoard[conf[i]-48] = Coordinate(i/3,i%3);
-    }
+  void Node::initFinalPositions(string config) {
+    if(!isBoardConfig(config))
+      throw invalid_argument(config + 
+        ": Invalid board config.");
+    
+    for (int i = 0; i < 9; i++)
+      Node::targetBoard[config[i]-48] = Coordinate(i/3,i%3);
   }
 
   priority_queue<Node*, vector<Node*>, NodeComparator> Node::generateSucessors() {
     priority_queue<Node*, vector<Node*>, NodeComparator> queue;
-    int holePos = -1, index = 0, condition;
+    int holePos = -1, index = 0;
 
     for (int e : this->board) {
       if(!e) { holePos = index; break; }

@@ -11,9 +11,9 @@ namespace EightPuzzleGame {
     public: 
       static Node* initial;
       static Node* final;
+      static Node* obtained;
 
-      static void initParams(int,char*[]);
-      static void initGame(string&,string&);
+      static void initGame(int,char*[]);
       static void solveGame(void);
       static void showGameSolution(void);
 

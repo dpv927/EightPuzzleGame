@@ -1,44 +1,33 @@
-# This Makefile specifies how to build the eight puzzle game
-# with all the dependencies. 
-# - author: Filipondios
-# - version 25.01.2023
-# Please modify carefully this file.
+CC=g++
+CFLAGS=-Wall -Wextra -Ofast -march=native -mtune=native
+CEXTRAFLAGS=-funroll-loops -finline-functions -fomit-frame-pointer -falign-loops -falign-labels
+SRCS=node.cpp game.cpp main.cpp 
+OBJS=$(SRCS:.c=.o)
+TARGET=eightPuzzleGame
 
-CC=clang++
-CFLAGS=-c -g -Wall -Wextra -Wunused
-SOURCES=node.cpp algorithm.cpp main.cpp
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=8solver
+all: $(TARGET)
 
-all: $(SOURCES) $(EXECUTABLE)
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(CEXTRAFLAGS) $(OBJS) -o $(TARGET)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+%.o: %.
+	$(CC) $(CFLAGS) -c $< -o $@
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+clean: 
+	rm -f $(OBJS) $(TARGET)
 
-clean:
-	rm -rf $(OBJECTS) $(EXECUTABLE)
+help:
+	@echo ""
+	@echo "To compile $(TARGET), type: "
+	@echo "make [OPT=option]"
+	@echo ""
+	@echo "Supported options:"
+	@echo ""
+	@echo "help 				> Display this message."
+	@echo "all 				> Only compile."
+	@echo "clean 				> Clean the Makefile directory from old files."
+	@echo ""
+	@echo "Do you have any doubts? See the Makefile."
+	@echo ""
 
-# Instead of running 'make', you can run 'make clean', so you delete the old
-# project files like .o files and the project executable and generate the new executable. 
-
-install:
-	@if [ "$(shell uname -s)" = "Linux" ]; then \
-		echo "Running make in Linux. Copiying 'eightgame' to /usr/bin/"; \
-		sudo cp $(EXECUTABLE) /usr/bin/; \
-		sudo cp -r 8-puzzle-solver.6 /usr/share/man/man6; \
-	elif [ "$(shell uname -s)" = "Darwin" ]; then \
-		echo "Running make in MacOS. Copiying 'eightgame' to /usr/local/bin/"; \
-		sudo cp $(EXECUTABLE) /usr/local/bin/; \
-	else \
-		echo "Unknown OS. 'Eightgame' won't be installed"; \
-	fi
-
-# You can also 'install' the project if you are using a Linux or
-# MacOS. To install the project, run 'make install' but if you haven't
-# compiled the project yet, just run 'make' and 'make install' or 'make clean'
-# and 'make install' or directly 'make clean install'.
-
-PHONY: clean install
+.PHONY: clean help
