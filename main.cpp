@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
   final->toString();
   std::cout << std::endl;
 
-  solutionPath = Node::getAncestorsQueue(solution);
+  solutionPath = Node::getAncestorsStack(solution);
   std::cout << "Solution path: \n" << std::endl;
 
   // Print the solution path
