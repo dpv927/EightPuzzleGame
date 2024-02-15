@@ -1,3 +1,4 @@
+#include <iostream>
 #include "game.hpp"
 
 namespace EightPuzzleGame {
@@ -33,7 +34,29 @@ namespace EightPuzzleGame {
     Game::obtained = current;
   }
 
-  void Game::showGameSolution(void){
+  void Game::showGameSolution(void) {
+    if(Game::obtained == nullptr) {
+      cout << "\nNo solution found." << endl;
+      return;
+    }
+  
+    // Search Info: Results
+    cout << "\nInitial board state: " << endl;
+    initial->toString();
+    cout << "\nFinal board state:" << endl;
+    final->toString();
+    cout << endl;
 
+    auto solutionPath = Node::getAncestorsStack(Game::obtained);
+    cout << "Solution path: \n" << endl;
+
+    // Print the solution path
+    Node* tmp = nullptr;
+    while(!solutionPath.empty()) {
+      tmp = solutionPath.top();
+      tmp->toString();
+      cout << "Depth -> " << tmp->nodeDepth << "\n" << endl;
+      solutionPath.pop();
+    }   
   }
 }
