@@ -9,5 +9,6 @@ namespace EightPuzzleGame_Utils {
       
       Coordinate(int i, int j)
       : i(i), j(j) {}
+      Coordinate(): i(0), j(0) {}
   };
 }

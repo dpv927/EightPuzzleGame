@@ -5,15 +5,35 @@
 using namespace std;
 namespace EightPuzzleGame_Utils {
 
+  Coordinate Node::targetBoard[9];
+
   bool Node::isBoardConfig(string config) {
-    string pattern = R"(^([0-8])(?:-(?!.*\1)([0-8])){8}$)";
-    return std::regex_match(config, regex(pattern));   
+    bool numbers[9];
+    int dif;
+
+    for (int i=0; i<9; i++)
+      numbers[i] = false;
+
+    for (char c : config) {
+      if(c == '-') 
+        continue;
+      
+      dif = c-'0';
+      if(dif>8 || dif<0 || numbers[dif])
+        return false; 
+      numbers[dif] = true;
+    }
+    
+    for (bool b : numbers)
+      if(!b) return false;
+    return false;
   }
   
   void Node::initFinalPositions(string config) {
     if(!isBoardConfig(config))
-      throw invalid_argument(config + 
-        ": Invalid board config.");
+      exit(0);
+    //throw invalid_argument(config + 
+    //    ": Invalid board config.");
     
     for (int i = 0; i < 9; i++)
       Node::targetBoard[config[i]-48] = Coordinate(i/3,i%3);
@@ -33,6 +53,7 @@ namespace EightPuzzleGame_Utils {
         Node* node = new Node(this);\
 		    node->board[holePos] = node->board[offset];\
         node->board[offset] = 0;\
+        node->heuristic = node->getHeuristic() + node->nodeDepth;\
         queue.push(node);\
       }\
       

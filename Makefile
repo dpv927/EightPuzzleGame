@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -Wextra -Ofast -march=native -mtune=native
 CEXTRAFLAGS=-funroll-loops -finline-functions -fomit-frame-pointer -falign-loops -falign-labels
 SRCS=node.cpp game.cpp main.cpp 
-OBJS=$(SRCS:.c=.o)
+OBJS=$(SRCS:.cpp=.o)
 TARGET=eightPuzzleGame
 
 all: $(TARGET)

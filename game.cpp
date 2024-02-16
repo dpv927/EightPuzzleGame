@@ -3,6 +3,10 @@
 
 namespace EightPuzzleGame {
 
+  Node* Game::initial;
+  Node* Game::final;
+  Node* Game::obtained;
+
   void Game::initGame(int argc, char* argv[]) {
     if(argc != 3) throw invalid_argument("Invalid number of arguments.");
     Node::initFinalPositions(argv[2]);

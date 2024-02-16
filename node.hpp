@@ -21,7 +21,6 @@ namespace EightPuzzleGame_Utils {
       Node(Node* father) {
         this->father = father;
         this->nodeDepth = father->nodeDepth + 1;
-        this->heuristic = getHeuristic() + this->nodeDepth;
         copy(begin(father->board), end(father->board), begin(this->board));
       }
 
