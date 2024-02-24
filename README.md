@@ -7,12 +7,10 @@
 <h4 align="center">A interactive command line solver for the eight puzzle game.</h4>
 
 <p align="center">
-  <a href="#key-features">Key Features</a> •
+  <a href="#about">About</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+  <a href="#board-format">Board Format</a> •
+  <a href="#command-examples">Command Examples</a>
 </p>
 
 ## About
