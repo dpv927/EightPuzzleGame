@@ -17,16 +17,14 @@
 
 ## About
 
-El juego del 8 es un juego donde se tiene un tablero con 8 piezas y un hueco. El objetivo principal es usar ese hueco
-adicional para mover los numeros del tablero y conseguir llegar a un orden de los numeros en concreto.
+The 8-puzzle-game is a game where you have a board with 8 pieces and a hole. The main objective is to use this additional gap to move the numbers on the board and get to a particular order of the numbers.
 
-Para ello, se ha creado esta aplicacion la cual permite al usuario seleccionar un estado inicial y objetivo, a la vez que
-obtener el camino de la solucion, no como otros programas de la web que solo permiten especificar el estado inicial.
+For this, we have created this application which allows the user to select an initial and target state, as well as to obtain the solution path, unlike other programs on the web that only allow the user to specify the initial and target state.
+the path to the solution, unlike other programs on the web that only allow the user to specify the initial state.
 
 ## How To Use
 
-Esta aplicacion se corre en consola, y responde a comandos que el usuario va introduciendo durante su ejecucion. Para ello,
-se podran usar los comandos que se indican a continuacion:
+This application runs in console, and responds to commands that the user enters during its execution. To do so, the following commands can be used the following commands can be used for this purpose:
 
 | Command | Description | 
 | --- | --- |
@@ -38,10 +36,10 @@ se podran usar los comandos que se indican a continuacion:
 
 ## Board format
 
-El programa tiene una manera de entender las configuraciones de los tableros de una forma especifica. Esta es una cadena
-de caracteres numericos del 0 al 8 sin repetirse, los cuales indican el orden de los numeros dentro del tablero. 
+The program has a way of understanding the board configurations in a specific way. This is a string of
+of numerical characters from 0 to 8 without repeating, which indicate the order of the numbers within the board. 
 
-A continuacion se muestran algunos ejemplos:
+Some examples are shown below:
 
 ```
                             +---+---+---+                                  +---+---+---+
@@ -53,7 +51,7 @@ Este seria el tablero para  +---+---+---+      Este seria el tablero para  +---+
                             +---+---+---+                                  +---+---+---+
 ```
 > **Note**
-> Debes tener en cuenta que el hueco del tablero se anotara como '0'.
+> You should note that the hole in the board will be represented as '0'.
 
 
 ## Command Examples
