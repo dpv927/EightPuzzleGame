@@ -40,13 +40,13 @@ of numerical characters from 0 to 8 without repeating, which indicate the order 
 Some examples are shown below:
 
 ```
-                            +---+---+---+                                  +---+---+---+
-                            | 6 | 5 | 7 |                                  | 1 | 2 | 3 |
-Este seria el tablero para  +---+---+---+      Este seria el tablero para  +---+---+---+
-   la cadena 657431208:     | 4 | 3 | 1 |         la cadena 123456780      | 4 | 5 | 6 |
-                            +---+---+---+                                  +---+---+---+
-                            | 2 |   | 8 |                                  | 7 | 8 |   |
-                            +---+---+---+                                  +---+---+---+
+                               +---+---+---+                                   +---+---+---+
+                               | 6 | 5 | 7 |                                   | 1 | 2 | 3 |
+This would be the board given  +---+---+---+    This would be the board given  +---+---+---+
+   by the string 657431208:    | 4 | 3 | 1 |       by the string 123456780:    | 4 | 5 | 6 |
+                               +---+---+---+                                   +---+---+---+
+                               | 2 |   | 8 |                                   | 7 | 8 |   |
+                               +---+---+---+                                   +---+---+---+
 ```
 > **Note**
 > You should note that the hole in the board will be represented as '0'.
